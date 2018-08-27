@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix' => 'datatable', 'as' => 'datatable.'], function(){
+    Route::get('brand', 'BrandController@datatable')->name('brand');
+});

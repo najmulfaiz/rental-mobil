@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="theme/img/basic/favicon.ico" type="image/x-icon">
-    <title>Paper</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="{{ asset('theme/img/basic/favicon.ico') }}" type="image/x-icon">
+    <title>Remo - Rental Mobil</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="theme/css/app.css">
+    <link rel="stylesheet" href="{{ asset('theme/css/app.css') }}">
     <style>
         .loader {
             position: fixed;
@@ -79,7 +80,7 @@
 <aside class="main-sidebar fixed offcanvas shadow">
     <section class="sidebar">
         <div class="w-80px mt-3 mb-3 ml-3">
-            <img src="theme/img/basic/logo.png" alt="">
+            <img src="{{ asset('theme/img/basic/logo.png') }}" alt="">
         </div>
         <div class="relative">
             <a data-toggle="collapse" href="#userSettingsCollapse" role="button" aria-expanded="false"
@@ -89,7 +90,7 @@
             <div class="user-panel p-3 light mb-2">
                 <div>
                     <div class="float-left image">
-                        <img class="user_avatar" src="theme/img/dummy/u2.png" alt="User Image">
+                        <img class="user_avatar" src="{{ asset('theme/img/dummy/u2.png') }}" alt="User Image">
                     </div>
                     <div class="float-left info">
                         <h6 class="font-weight-light mt-2 mb-1">{{ Auth::user()->name }}</h6>
@@ -158,7 +159,19 @@
 <div class="control-sidebar-bg shadow white fixed"></div>
 </div>
 <!--/#app -->
-<script src="theme/js/app.js"></script>
+<script src="{{ asset('theme/js/app.js') }}"></script>
+<script>
+    $.extend( $.fn.dataTable.defaults, {
+        autoWidth: false,
+        language: {
+            search: '<span>Pencarian:</span> _INPUT_',
+            searchPlaceholder: 'Ketik untuk mencari...',
+            lengthMenu: '<span>Tampil:</span> _MENU_',
+            paginate: { 'first': 'Awal', 'last': 'Akhir', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+        }
+    });
+</script>
+@yield('script')
 </body>
 </html>
 
