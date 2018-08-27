@@ -102,10 +102,18 @@
                         <a href="index.html" class="list-group-item list-group-item-action ">
                             <i class="mr-2 icon-umbrella text-blue"></i>Profile
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action"><i
-                                class="mr-2 icon-cogs text-yellow"></i>Settings</a>
-                        <a href="#" class="list-group-item list-group-item-action"><i
-                                class="mr-2 icon-security text-purple"></i>Change Password</a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <i class="mr-2 icon-cogs text-yellow"></i>Settings
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <i class="mr-2 icon-security text-purple"></i>Change Password
+                        </a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="list-group-item list-group-item-action">
+                            <i class="mr-2 icon-exit_to_app text-purple"></i>Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </div>
