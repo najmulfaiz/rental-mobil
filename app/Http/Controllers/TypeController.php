@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Brand;
+use App\Type;
 use Illuminate\Http\Request;
 
-class BrandController extends Controller
+class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        return view('brand.index');
+        return view('type.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('brand.create');
+        return view('type.create');
     }
 
     /**
@@ -36,12 +36,16 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:50'
+            'brand' => 'required',
+            'name' => 'required|max:75'
         ]);
 
-        $brand = Brand::create($request->all());
-        
-        return redirect()->route('brand.index')->with('success', 'Brand ' . $brand->name . ' berhasil ditambahkan.');
+        $type = Type::create([
+            'name' => $request->name,
+            'brand_id' => $request->brand
+        ]);
+
+        return redirect()->route('type.index')->with('success', 'Type ' . $type->name . ' berhasil ditambahkan.');
     }
 
     /**
@@ -63,8 +67,9 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        $brand = Brand::findOrFail($id);
-        return view('brand.edit', compact('brand'));
+        $type = Type::findOrFail($id);
+
+        return view('type.edit', compact('type'));
     }
 
     /**
@@ -76,17 +81,18 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $brand = Brand::findOrFail($id);
-        $brand_old = $brand->name;
+        $type = Type::findOrFail($id);
+        $type_old = $type->name;
 
         $this->validate($request, [
-            'name' => 'required|max:50'
+            'brand' => 'required',
+            'name' => 'required|max:75'
         ]);
 
-        $brand->name = $request['name'];
-        $brand->save();
+        $type->name = $request['name'];
+        $type->save();
         
-        return redirect()->route('brand.index')->with('success', 'Brand ' . $brand_old . ' berhasil diubah menjadi ' . $brand->name . '.');
+        return redirect()->route('type.index')->with('success', 'Type ' . $type_old . ' berhasil diubah menjadi ' . $type->name . '.');
     }
 
     /**
@@ -97,11 +103,11 @@ class BrandController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $brand = Brand::findOrFail($id);
-        $brand_old = $brand->name;
-        $brand->delete();
+        $type = Type::findOrFail($id);
+        $type_old = $type->name;
+        $type->delete();
 
-        $request->session()->flash('success', 'Brand ' . $brand_old . ' berhasil dihapus!');
+        $request->session()->flash('success', 'Type ' . $type_old . ' berhasil dihapus!');
 
         return response()->json([
             'error' => false
@@ -111,20 +117,21 @@ class BrandController extends Controller
     public function datatable()
     {
         $find = $_GET['search']['value'] ? $_GET['search']['value'] : '';
-        $records = Brand::where('name', 'like', '%' . $find . '%')
+        $records = Type::where('name', 'like', '%' . $find . '%')
                         ->offset($_GET['start'])
                         ->limit($_GET['length'])
                         ->orderBy('name')
                         ->get();
         
-        $recordsTotal = Brand::count();          
+        $recordsTotal = Type::count();          
         $recordsFiltered = count($records);
         $data = [];
         foreach($records as $index => $record) {
             $data[] = [
                 ($index + 1),
                 $record->name,
-                '<a href="' . route('brand.edit', $record->id) . '" class="btn btn-outline-warning btn-xs" data-id="' . $record->id . '">Edit</a>'
+                $record->brand->name,
+                '<a href="' . route('type.edit', $record->id) . '" class="btn btn-outline-warning btn-xs" data-id="' . $record->id . '">Edit</a>'
                 .'&nbsp; <button class="btn btn-outline-danger btn-xs btn-delete" data-id="' . $record->id . '">Delete</button>'
             ];
         }
@@ -134,13 +141,6 @@ class BrandController extends Controller
             'recordsFiltered' => $recordsFiltered,
             'data' => $data
         ];
-        return response()->json($res);
-    }
-
-    public function api()
-    {
-        $res = Brand::orderBy('name')->get();
-        
         return response()->json($res);
     }
 }

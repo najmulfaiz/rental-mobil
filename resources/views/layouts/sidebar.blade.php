@@ -10,8 +10,9 @@
             class="icon icon-angle-left s-18 pull-right"></i>
     </a>
         <ul class="treeview-menu">
+            <li><a href="{{ route('user.index') }}"><i class="icon icon-folder5"></i>User</a></li>
             <li><a href="{{ route('brand.index') }}"><i class="icon icon-folder5"></i>Brand</a></li>
-            <li><a href="#"><i class="icon icon-folder5"></i>Type</a></li>
+            <li><a href="{{ route('type.index') }}"><i class="icon icon-folder5"></i>Type</a></li>
         </ul>
     </li>
 </ul>

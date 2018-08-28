@@ -162,12 +162,17 @@
 <script src="{{ asset('theme/js/app.js') }}"></script>
 <script>
     $.extend( $.fn.dataTable.defaults, {
+        columnDefs: [
+            { "width": "5%", "targets": 0 },
+            { "width": "15%", "targets": -1 }
+        ],
         autoWidth: false,
+        dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
         language: {
-            search: '<span>Pencarian:</span> _INPUT_',
-            searchPlaceholder: 'Ketik untuk mencari...',
-            lengthMenu: '<span>Tampil:</span> _MENU_',
-            paginate: { 'first': 'Awal', 'last': 'Akhir', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+            search: '<span>Filter:</span> _INPUT_',
+            searchPlaceholder: 'Type to filter...',
+            lengthMenu: '<span>Show:</span> _MENU_',
+            paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
         }
     });
 </script>

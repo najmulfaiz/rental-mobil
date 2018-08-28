@@ -17,6 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['as' => 'api.'], function(){
+    Route::get('brand', 'BrandController@api')->name('brand');
+    // Route::get('type', 'TypeController@datatable')->name('type');
+});
+
 Route::group(['prefix' => 'datatable', 'as' => 'datatable.'], function(){
     Route::get('brand', 'BrandController@datatable')->name('brand');
+    Route::get('type', 'TypeController@datatable')->name('type');
 });
