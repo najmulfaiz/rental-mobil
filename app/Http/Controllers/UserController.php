@@ -43,7 +43,12 @@ class UserController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $user = User::create($request->all());
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'password' => Hash::make($request['password'])
+        ]);
 
         return redirect()->route('user.index')->with('success', 'User ' . $user->name . ' berhasil ditambahkan.');
     }
@@ -133,16 +138,19 @@ class UserController extends Controller
         $data = [];
         foreach($records as $index => $record) {
             $verified = '';
+            $verify = '<button class="btn btn-xs btn-outline-success btn-verify" data-id="' . $record->id . '">Verify</button>&nbsp;';
+
             if($record->verified) {
                 $verified = ' <i class="icon-verified_user" title="User verified"></i>';
+                $verify = '';
             }
 
             $data[] = [
                 ($index + 1),
                 $record->name . $verified,
                 $record->email,
-                '<a href="' . route('user.edit', $record->id) . '" class="btn btn-outline-warning btn-xs" data-id="' . $record->id . '">Edit</a>'
-                .'&nbsp; <button class="btn btn-outline-danger btn-xs btn-delete" data-id="' . $record->id . '">Delete</button>'
+                $verify . '<a href="' . route('user.edit', $record->id) . '" class="btn btn-outline-warning btn-xs" data-id="' . $record->id . '">Edit</a>'
+                .'&nbsp;<button class="btn btn-outline-danger btn-xs btn-delete" data-id="' . $record->id . '">Delete</button>'
             ];
         }
         $res = [

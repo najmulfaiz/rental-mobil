@@ -12,7 +12,7 @@
                 <div class="card-header white">
                     <strong> Input Master User  </strong>
                 </div>
-                <form action="{{ route('user.update') }}" method="POST">
+                <form action="{{ route('user.store') }}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="row">
