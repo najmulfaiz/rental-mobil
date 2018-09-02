@@ -23,6 +23,7 @@ Route::group(['as' => 'api.'], function(){
 });
 
 Route::group(['prefix' => 'datatable', 'as' => 'datatable.'], function(){
+    Route::get('user', 'UserController@datatable')->name('user');
     Route::get('brand', 'BrandController@datatable')->name('brand');
     Route::get('type', 'TypeController@datatable')->name('type');
 });

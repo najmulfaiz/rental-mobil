@@ -21,6 +21,7 @@ Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('verify');
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('user', 'UserController')->except(['show']);
     Route::resource('brand', 'BrandController')->except(['show']);
     Route::resource('type', 'TypeController')->except(['show']);
 });

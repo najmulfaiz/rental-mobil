@@ -167,7 +167,6 @@
             { "width": "15%", "targets": -1 }
         ],
         autoWidth: false,
-        dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
         language: {
             search: '<span>Filter:</span> _INPUT_',
             searchPlaceholder: 'Type to filter...',
