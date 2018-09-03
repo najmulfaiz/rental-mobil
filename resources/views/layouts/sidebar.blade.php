@@ -13,6 +13,7 @@
             <li><a href="{{ route('user.index') }}"><i class="icon icon-folder5"></i>User</a></li>
             <li><a href="{{ route('brand.index') }}"><i class="icon icon-folder5"></i>Brand</a></li>
             <li><a href="{{ route('type.index') }}"><i class="icon icon-folder5"></i>Type</a></li>
+            <li><a href="{{ route('voucher.index') }}"><i class="icon icon-folder5"></i>Voucher</a></li>
         </ul>
     </li>
 </ul>

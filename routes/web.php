@@ -24,4 +24,5 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resource('user', 'UserController')->except(['show']);
     Route::resource('brand', 'BrandController')->except(['show']);
     Route::resource('type', 'TypeController')->except(['show']);
+    Route::resource('voucher', 'VoucherController')->except(['show']);
 });

@@ -15,8 +15,16 @@ class CreateVouchersTable extends Migration
     {
         Schema::create('vouchers', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('kode_voucher');
+            $table->datetime('waktu_mulai');
+            $table->datetime('waktu_berakhir');
+            $table->integer('max_pemakaian');
+            $table->enum('bentuk', ['solid', 'persen']);
+            $table->float('isi', 0, 0);
+            $table->enum('level', ['penyewa', 'rental']);
+            $table->enum('status', ['aktif', 'tidak']);
             $table->timestamps();
-        });
+        }); 
     }
 
     /**
