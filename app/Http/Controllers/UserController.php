@@ -3,21 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\PenyewaPhoto;
+use App\PenyewaPhotoHistory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('user.index');
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -25,7 +17,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        //
     }
 
     /**
@@ -36,21 +28,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|min:10|max:15|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-
-        $user = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'phone' => $request['phone'],
-            'password' => Hash::make($request['password'])
-        ]);
-
-        return redirect()->route('user.index')->with('success', 'User ' . $user->name . ' berhasil ditambahkan.');
+        //
     }
 
     /**
@@ -61,7 +39,19 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        if(Auth::user()->id != $id) {
+            return abort(404);
+        }
+
+        $user = Auth::user();
+        
+        if($user->level == 'admin') {
+            return redirect()->url('/');
+        } else {
+            $photo = PenyewaPhoto::where('user_id', $user->id)->first();
+
+            return view('user.show', compact('user', 'photo'));
+        }
     }
 
     /**
@@ -74,7 +64,48 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return view('user.edit', compact('user'));
+        return view('user.edit');
+    }
+
+    public function edit_photo(Request $request, $id)
+    {
+        $input = $request->all();
+        // dd($input);
+        $photo_type = array('photo_diri', 'photo_ktp', 'photo_buku_bank', 'photo_sim');
+        
+        foreach($photo_type as $type) {
+            $input['filename_' . $type] = null;
+            if($request->hasFile($type)) {
+                $input['filename_' . $type] = 'images/user/' . $type . '_' .  date('ymdhis') . '.' . $request->file($type)->getClientOriginalExtension();
+                $request->file($type)->move(public_path('images/user/'), $input['filename_' . $type]);
+            }
+        }
+
+        if($input['photo_id'] == '#') {
+            $penyewa_photo = PenyewaPhoto::create([
+                'user_id' => $id,
+                'photo_diri' => $input['filename_photo_diri'],
+                'photo_ktp' => $input['filename_photo_ktp'],
+                'photo_buku_bank' => $input['filename_photo_buku_bank'],
+                'photo_sim' => $input['filename_photo_sim']
+            ]);
+        } else {
+            $penyewa_photo = PenyewaPhoto::findOrFail($input['photo_id']);
+            $penyewa_photo->photo_diri = $input['filename_photo_diri'];
+            $penyewa_photo->photo_ktp = $input['filename_photo_ktp'];
+            $penyewa_photo->photo_buku_bank = $input['filename_photo_buku_bank'];
+            $penyewa_photo->photo_sim = $input['filename_photo_sim'];
+        }
+
+        $penyewa_photo_history = PenyewaPhotoHistory::create([
+            'user_id' => $id,
+            'photo_diri' => $input['filename_photo_diri'],
+            'photo_ktp' => $input['filename_photo_ktp'],
+            'photo_buku_bank' => $input['filename_photo_buku_bank'],
+            'photo_sim' => $input['filename_photo_sim']
+        ]);
+
+        return redirect()->route('user.show', $id)->with('success', 'Data berhasil diperbarui');
     }
 
     /**
@@ -86,23 +117,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user_old = $user->name;
-
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'phone' => 'required|min:10|max:15|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-
-        $user->name = $request['name'];
-        $user->email = $request['email'];
-        $user->phone = $request['phone'];
-        $user->password = Hash::make($request['password']);
-        $user->save();
-
-        return redirect()->route('user.index')->with('success', 'User ' . $user_old . ' berhasil diubah.');
+        //
     }
 
     /**
@@ -111,54 +126,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user_old = $user->name;
-        $user->delete();
-
-        $request->session()->flash('success', 'User ' . $user_old . ' berhasil dihapus!');
-
-        return response()->json([
-            'error' => false
-        ]);
-    }
-
-    public function datatable()
-    {
-        $find = $_GET['search']['value'] ? $_GET['search']['value'] : '';
-        $records = User::where('name', 'like', '%' . $find . '%')
-                        ->offset($_GET['start'])
-                        ->limit($_GET['length'])
-                        ->orderBy('name')
-                        ->get();
-        
-        $recordsTotal = User::count();          
-        $recordsFiltered = count($records);
-        $data = [];
-        foreach($records as $index => $record) {
-            $verified = '';
-            $verify = '<button class="btn btn-xs btn-outline-success btn-verify" data-id="' . $record->id . '">Verify</button>&nbsp;';
-
-            if($record->verified) {
-                $verified = ' <i class="icon-verified_user" title="User verified"></i>';
-                $verify = '';
-            }
-
-            $data[] = [
-                ($index + 1),
-                $record->name . $verified,
-                $record->email,
-                $verify . '<a href="' . route('user.edit', $record->id) . '" class="btn btn-outline-warning btn-xs" data-id="' . $record->id . '">Edit</a>'
-                .'&nbsp;<button class="btn btn-outline-danger btn-xs btn-delete" data-id="' . $record->id . '">Delete</button>'
-            ];
-        }
-        $res = [
-            'draw' => $_GET['draw'],
-            'recordsTotal' => $recordsTotal,
-            'recordsFiltered' => $recordsFiltered,
-            'data' => $data
-        ];
-        return response()->json($res);
+        //
     }
 }

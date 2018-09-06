@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="theme/img/basic/favicon.ico" type="image/x-icon">
-    <title>Paper</title>
+    <title>Remo - Login</title>
     <!-- CSS -->
     <link rel="stylesheet" href="theme/css/app.css">
     <style>
@@ -106,7 +106,7 @@
                                 </span>
                             @endif
                         </div>
-                        <div class="form-group has-icon"><i class="icon-user-secret"></i>
+                        <div class="form-group has-icon"><i class="icon-asterisk"></i>
                             <input id="password" type="password" class="form-control form-control-lg{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required placeholder="Password">
                             @if ($errors->has('password'))
                                 <span class="invalid-feedback" role="alert">

@@ -1,18 +1,7 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing');
 });
 
 Auth::routes();
@@ -20,9 +9,22 @@ Auth::routes();
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('verify');
 
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('user', 'UserController')->except(['show']);
-    Route::resource('brand', 'BrandController')->except(['show']);
-    Route::resource('type', 'TypeController')->except(['show']);
-    Route::resource('voucher', 'VoucherController')->except(['show']);
+    // ADMIN ROUTES
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], function(){
+        Route::get('home', 'HomeController@index')->name('home');
+        Route::resource('user', 'UserController')->except(['show']);
+        Route::resource('brand', 'BrandController')->except(['show']);
+        Route::resource('type', 'TypeController')->except(['show']);
+        Route::resource('voucher', 'VoucherController')->except(['show']);
+    });
+
+    // USER ROUTES
+    Route::resource('user', 'UserController')->except(['index']);
+    Route::patch('user/{user}/edit_photo', 'UserController@edit_photo')->name('user.edit_photo');
+
+    // USER MOBIL ROUTES
+    Route::resource('user/{user}/mobil', 'UserMobilController');
+
+    // USER TRANSAKSI
+
 });
