@@ -21,9 +21,9 @@
 
                 <ul>
                     <li><a href="{{ url('/') }}"><div>Home</div></a></li>
-                    <li><a href="#"><div>Cari Mobil</div></a></li>
-                    <li><a href="#"><div>Tentang Kami</div></a></li>
-                    <li><a href="#"><div>Kontak</div></a></li>
+                    <li><a href="{{ route('website.list_produk') }}"><div>Cari Mobil</div></a></li>
+                    <li><a href="{{ route('website.tentang') }}"><div>Tentang Kami</div></a></li>
+                    <li><a href="{{ route('website.kontak') }}"><div>Kontak</div></a></li>
                     @if(Route::has('login'))
                         @auth                            
                             <li><a href="{{ url('/') }}"><div><i class="icon-user"></i> {{ Auth::user()->name }}</div></a>

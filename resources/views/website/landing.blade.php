@@ -9,9 +9,9 @@
 				<div class="fslider" data-speed="3000" data-pause="7500" data-animation="fade" data-arrows="false" data-pagi="false" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; background-color: #333; z-index: 1;">
 					<div class="flexslider" style="height: 100% !important;">
 						<div class="slider-wrap" style="height: inherit;">
-							<div class="slide" style="background: url('{{ asset('website/demos/real-estate/images/hero/3.jpg') }}') center center; background-size: cover; height: 100% !important;"></div>
-							<div class="slide" style="background: url('{{ asset('website/demos/real-estate/images/hero/4.jpg') }}') center center; background-size: cover; height: 100% !important;"></div>
-							<div class="slide" style="background: url('{{ asset('website/demos/real-estate/images/hero/5.jpg') }}') center center; background-size: cover; height: 100% !important;"></div>
+							<div class="slide" style="background: url('{{ asset('images/slider/bg-home1.jpg') }}') center center; background-size: cover; height: 100% !important;"></div>
+							<div class="slide" style="background: url('{{ asset('images/slider/bg-home2.jpg') }}') center center; background-size: cover; height: 100% !important;"></div>
+							<div class="slide" style="background: url('{{ asset('images/slider/bg-home3.jpg') }}') center center; background-size: cover; height: 100% !important;"></div>
 						</div>
 					</div>
 				</div>
@@ -247,121 +247,54 @@
 							<h3>Featured Properties</h3>
 						</div>
 
-						<a href="#" class="button button-small button-rounded button-border button-border-thin t500 nomargin" style="position: absolute; top: 7px; right: 0;">Check All</a>
+						<a href="{{ route('website.list_produk') }}" class="button button-small button-rounded button-border button-border-thin t500 nomargin" style="position: absolute; top: 7px; right: 0;">Check All</a>
 
 						<div class="real-estate owl-carousel image-carousel carousel-widget bottommargin-lg" data-margin="10" data-nav="true" data-loop="true" data-pagi="false" data-items-xs="1" data-items-sm="1" data-items-md="2" data-items-lg="3" data-items-xl="3">
 
-							<div class="oc-item">
-								<div class="real-estate-item">
-									<div class="real-estate-item-image">
-										<div class="badge badge-danger bgcolor-2">For Sale</div>
-										<a href="#">
-											<img src="{{ asset('website/demos/real-estate/images/items/1.jpg') }}" alt="Image 1">
-										</a>
-										<div class="real-estate-item-price">
-											$1.2m<span>Leasehold</span>
+							@foreach ($features as $feature)
+								<div class="oc-item">
+									<div class="real-estate-item">
+										<div class="real-estate-item-image">
+											<div class="badge badge-danger bgcolor-2">For Sale</div>
+											<a href="{{ route('website.mobil', $feature->id) }}">
+												<img src="{{ asset($feature->photo_mobil_1) }}" alt="Image 1">
+											</a>
+											<div class="real-estate-item-price">
+												$1.2m<span>Leasehold</span>
+											</div>
+											<div class="real-estate-item-info clearfix" data-lightbox="gallery">
+												<a href="{{ asset($feature->{'photo_mobil_1'}) }}" data-toggle="tooltip" title="Images" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
+												@for($x = 2; $x <= 5; $x++)
+													@if($feature->{'photo_mobil_' . $x})
+														<a href="{{ asset($feature->{'photo_mobil_' . $x}) }}" class="hidden" data-lightbox="gallery-item"></a>
+													@endif
+												@endfor
+												<a href="#" data-toggle="tooltip" title="Like"><i class="icon-line-heart"></i></a>
+											</div>
 										</div>
-										<div class="real-estate-item-info clearfix">
-											<a href="#"><i class="icon-line-stack-2"></i></a>
-											<a href="#"><i class="icon-line-heart"></i></a>
-										</div>
-									</div>
 
-									<div class="real-estate-item-desc">
-										<h3><a href="#">3 Bedroom Villa</a></h3>
-										<span>Seminyak Area</span>
+										<div class="real-estate-item-desc">
+											<h3><a href="{{ route('website.mobil', $feature->id) }}">{{ $feature->brand->name . ', ' . $feature->type->name }}</a></h3>
+											<span>{{ $feature->kota->name . ', ' . $feature->provinsi->name }}</span>
 
-										<a href="#" class="real-estate-item-link"><i class="icon-info"></i></a>
+											<a href="{{ route('website.mobil', $feature->id) }}" class="real-estate-item-link"><i class="icon-info"></i></a>
 
-										<div class="line" style="margin-top: 15px; margin-bottom: 15px;"></div>
+											<div class="line" style="margin-top: 15px; margin-bottom: 15px;"></div>
 
-										<div class="real-estate-item-features t500 font-primary clearfix">
-											<div class="row no-gutters">
-												<div class="col-lg-4 nopadding">Beds: <span class="color">3</span></div>
-												<div class="col-lg-4 nopadding">Baths: <span class="color">3</span></div>
-												<div class="col-lg-4 nopadding">Area: <span class="color">150 sqm</span></div>
-												<div class="col-lg-4 nopadding">Pool: <span class="text-success"><i class="icon-check-sign"></i></span></div>
-												<div class="col-lg-4 nopadding">Internet: <span class="text-success"><i class="icon-check-sign"></i></span></div>
-												<div class="col-lg-4 nopadding">Cleaning: <span class="text-danger"><i class="icon-minus-sign-alt"></i></span></div>
+											<div class="real-estate-item-features t500 font-primary clearfix">
+												<div class="row no-gutters">
+													<div class="col-lg-4 nopadding">Beds: <span class="color">3</span></div>
+													<div class="col-lg-4 nopadding">Baths: <span class="color">3</span></div>
+													<div class="col-lg-4 nopadding">Area: <span class="color">150 sqm</span></div>
+													<div class="col-lg-4 nopadding">Pool: <span class="text-success"><i class="icon-check-sign"></i></span></div>
+													<div class="col-lg-4 nopadding">Internet: <span class="text-success"><i class="icon-check-sign"></i></span></div>
+													<div class="col-lg-4 nopadding">Cleaning: <span class="text-danger"><i class="icon-minus-sign-alt"></i></span></div>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="oc-item">
-								<div class="real-estate-item">
-									<div class="real-estate-item-image">
-										<div class="badge badge-success">Hot Deal</div>
-										<a href="#">
-											<img src="{{ asset('website/demos/real-estate/images/items/2.jpg') }}" alt="Image 2">
-										</a>
-										<div class="real-estate-item-price">
-											$200,000<span>bi-annually</span>
-										</div>
-										<div class="real-estate-item-info clearfix">
-											<a href="#"><i class="icon-line-stack-2"></i></a>
-											<a href="#"><i class="icon-line-heart"></i></a>
-										</div>
-									</div>
-
-									<div class="real-estate-item-desc">
-										<h3><a href="#">3 Bedroom Villa</a></h3>
-										<span>Seminyak Area</span>
-
-										<a href="#" class="real-estate-item-link"><i class="icon-info"></i></a>
-
-										<div class="line" style="margin-top: 15px; margin-bottom: 15px;"></div>
-
-										<div class="real-estate-item-features t500 clearfix">
-											<div class="row no-gutters">
-												<div class="col-lg-4 nopadding">Beds: <span class="color">3</span></div>
-												<div class="col-lg-4 nopadding">Baths: <span class="color">3</span></div>
-												<div class="col-lg-4 nopadding">Area: <span class="color">150 sqm</span></div>
-												<div class="col-lg-4 nopadding">Pool: <span class="text-success"><i class="icon-check-sign"></i></span></div>
-												<div class="col-lg-4 nopadding">Internet: <span class="text-success"><i class="icon-check-sign"></i></span></div>
-												<div class="col-lg-4 nopadding">Cleaning: <span class="text-success"><i class="icon-check-sign"></i></span></div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="oc-item">
-								<div class="real-estate-item">
-									<div class="real-estate-item-image">
-										<div class="badge badge-danger">Long Term Rental</div>
-										<a href="#">
-											<img src="{{ asset('website/demos/real-estate/images/items/4.jpg') }}" alt="Image 3">
-										</a>
-										<div class="real-estate-item-price">
-											$1600<span>per month</span>
-										</div>
-										<div class="real-estate-item-info clearfix">
-											<a href="#"><i class="icon-line-stack-2"></i></a>
-											<a href="#"><i class="icon-line-heart"></i></a>
-										</div>
-									</div>
-
-									<div class="real-estate-item-desc">
-										<h3><a href="#">3 Bedroom Villa</a></h3>
-										<span>Seminyak Area</span>
-
-										<a href="#" class="real-estate-item-link"><i class="icon-info"></i></a>
-
-										<div class="line" style="margin-top: 15px; margin-bottom: 15px;"></div>
-
-										<div class="real-estate-item-features t500 clearfix">
-											<div class="row no-gutters">
-												<div class="col-lg-4 nopadding">Beds: <span class="color">3</span></div>
-												<div class="col-lg-4 nopadding">Baths: <span class="color">3</span></div>
-												<div class="col-lg-4 nopadding">Area: <span class="color">150 sqm</span></div>
-												<div class="col-lg-4 nopadding">Pool: <span class="text-success"><i class="icon-check-sign"></i></span></div>
-												<div class="col-lg-4 nopadding">Internet: <span class="text-success"><i class="icon-check-sign"></i></span></div>
-												<div class="col-lg-4 nopadding">Cleaning: <span class="text-success"><i class="icon-check-sign"></i></span></div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							@endforeach
 
 						</div>
 					</div>

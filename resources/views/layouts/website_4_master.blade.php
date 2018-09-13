@@ -8,7 +8,6 @@
 	<!-- Stylesheets
 	============================================= -->
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Raleway:300,400,500,600,700|Crete+Round:400i" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<link rel="stylesheet" href="{{ asset('website/css/bootstrap.css') }}" type="text/css" />
 	<link rel="stylesheet" href="{{ asset('website/style.css') }}" type="text/css" />
 	<link rel="stylesheet" href="{{ asset('website/css/dark.css') }}" type="text/css" />
@@ -34,21 +33,6 @@
 	<div id="wrapper" class="clearfix">
 
 		@include('layouts.website_2_header')
-
-		<!-- Page Title
-		============================================= -->
-		<section id="page-title">
-
-			<div class="container clearfix">
-				<h1>@yield('title')</h1>
-				{{-- <ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<li class="breadcrumb-item"><a href="#">Pages</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Full Width Layout</li>
-				</ol> --}}
-			</div>
-
-		</section><!-- #page-title end -->
 
 		<!-- Content
 		============================================= -->

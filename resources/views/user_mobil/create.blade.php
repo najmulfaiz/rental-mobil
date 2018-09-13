@@ -20,192 +20,195 @@
             <div class="col_full">
                 <div class="card">
                     <div class="card-body">
-                        <h5>Detail Mobil</h5>
-                        <hr>
-                        <div class="col_half" style="margin-bottom: 10px;">
-                            <div class="form-group">
-                                <label for="nopol">Nopol</label>
-                                <input type="text" id="nopol" name="nopol" class="form-control">
+                        <form action="{{ route('user_mobil.store', $id) }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <h5>Detail Mobil</h5>
+                            <hr>
+                            <div class="col_half" style="margin-bottom: 10px;">
+                                <div class="form-group">
+                                    <label for="nopol">Nopol</label>
+                                    <input type="text" id="nopol" name="nopol" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="brand">Brand</label>
+                                    <select id="brand" name="brand" class="form-control"></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="type">Type</label>
+                                    <select id="type" name="type" class="form-control"></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="tahun_pembuatan">Tahun Pembuatan</label>
+                                    <input type="text" id="tahun_pembuatan" name="tahun_pembuatan" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="provinsi">Provinsi</label>
+                                    <select id="provinsi" name="provinsi" class="form-control"></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="kota">Kota</label>
+                                    <select id="kota" name="kota" class="form-control"></select>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="brand">Brand</label>
-                                <select id="brand" name="brand" class="form-control"></select>
-                            </div>
+                            <div class="col_half col_last" style="margin-bottom: 10px;">
+                                <div id="myMap"></div>
+                                
+                                <div class="form-group">
+                                    <label for="koordinat_lokasi">Koordinat Lokasi</label>
+                                    <input type="text" id="koordinat_lokasi" name="koordinat_lokasi" class="form-control">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="type">Type</label>
-                                <select id="type" name="type" class="form-control"></select>
+                                <div class="form-group">
+                                    <label for="foto">Foto</label>
+                                    <input type="file" id="foto" name="foto[]" class="form-control" multiple>
+                                </div>
                             </div>
-
-                            <div class="form-group">
-                                <label for="tahun_pembuatan">Tahun Pembuatan</label>
-                                <input type="text" id="tahun_pembuatan" name="tahun_pembuatan" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="provinsi">Provinsi</label>
-                                <select id="provinsi" name="provinsi" class="form-control"></select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="kota">Kota</label>
-                                <select id="kota" name="kota" class="form-control"></select>
-                            </div>
-                        </div>
-
-                        <div class="col_half col_last" style="margin-bottom: 10px;">
-                            <div id="myMap"></div>
                             
-                            <div class="form-group">
-                                <label for="koordinat_lokasi">Koordinat Lokasi</label>
-                                <input type="text" id="koordinat_lokasi" name="koordinat_lokasi" class="form-control">
-                            </div>
+                            <div class="clear"></div>
+                            <h5>Tarif</h5>
+                            <hr>
 
-                            <div class="form-group">
-                                <label for="foto">Foto</label>
-                                <input type="file" id="foto" name="foto" class="form-control" multiple>
-                            </div>
-                        </div>
-                        
-                        <div class="clear"></div>
-                        <h5>Tarif</h5>
-                        <hr>
-
-                        <div class="col_half" style="margin-bottom: 10px;">
-                            <h5 class="text-center"><u>Tarif Lepas Kunci</u></h5>
                             <div class="col_half" style="margin-bottom: 10px;">
-                                <div class="form-group">
-                                    <label for="lepas_biasa_1">Hari Biasa 1 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
+                                <h5 class="text-center"><u>Tarif Lepas Kunci</u></h5>
+                                <div class="col_half" style="margin-bottom: 10px;">
+                                    <div class="form-group">
+                                        <label for="lepas_biasa_1">Hari Biasa 1 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="lepas_biasa_1" name="lepas_biasa_1" class="form-control">
                                         </div>
-                                        <input type="text" id="lepas_biasa_1" name="lepas_biasa_1" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lepas_biasa_3">Hari Biasa 3 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="lepas_biasa_3" name="lepas_biasa_3" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lepas_biasa_24">Hari Biasa 24 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="lepas_biasa_24" name="lepas_biasa_24" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="lepas_biasa_3">Hari Biasa 3 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
+                                <div class="col_half col_last" style="margin-bottom: 10px;">
+                                    <div class="form-group">
+                                        <label for="lepas_khusus_1">Hari Weekend & Khusus 1 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="lepas_khusus_1" name="lepas_khusus_1" class="form-control">
                                         </div>
-                                        <input type="text" id="lepas_biasa_3" name="lepas_biasa_3" class="form-control">
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="lepas_biasa_24">Hari Biasa 24 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
+                                    <div class="form-group">
+                                        <label for="lepas_khusus_3">Hari Weekend & Khusus 3 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="lepas_khusus_3" name="lepas_khusus_3" class="form-control">
                                         </div>
-                                        <input type="text" id="lepas_biasa_24" name="lepas_biasa_24" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lepas_khusus_24">Hari Weekend & Khusus 24 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="lepas_khusus_24" name="lepas_khusus_24" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col_half col_last" style="margin-bottom: 10px;">
-                                <div class="form-group">
-                                    <label for="lepas_khusus_1">Hari Weekend & Khusus 1 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
+                                <h5 class="text-center"><u>Tarif Dengan Driver</u></h5>
+                                <div class="col_half" style="margin-bottom: 10px;">
+                                    <div class="form-group">
+                                        <label for="driver_biasa_1">Hari Biasa 1 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="driver_biasa_1" name="driver_biasa_1" class="form-control">
                                         </div>
-                                        <input type="text" id="lepas_khusus_1" name="lepas_khusus_1" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="driver_biasa_3">Hari Biasa 3 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="driver_biasa_3" name="driver_biasa_3" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="driver_biasa_24">Hari Biasa 24 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="driver_biasa_24" name="driver_biasa_24" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="lepas_khusus_3">Hari Weekend & Khusus 3 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
+                                <div class="col_half col_last" style="margin-bottom: 10px;">
+                                    <div class="form-group">
+                                        <label for="driver_khusus_1">Hari Weekend & Khusus 1 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="driver_khusus_1" name="driver_khusus_1" class="form-control">
                                         </div>
-                                        <input type="text" id="lepas_khusus_3" name="lepas_khusus_3" class="form-control">
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="lepas_khusus_24">Hari Weekend & Khusus 24 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
+                                    <div class="form-group">
+                                        <label for="driver_khusus_3">Hari Weekend & Khusus 3 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="driver_khusus_3" name="driver_khusus_3" class="form-control">
                                         </div>
-                                        <input type="text" id="lepas_khusus_24" name="lepas_khusus_24" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="driver_khusus_24">Hari Weekend & Khusus 24 Jam</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Rp</span>
+                                            </div>
+                                            <input type="text" id="driver_khusus_24" name="driver_khusus_24" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col_half col_last" style="margin-bottom: 10px;">
-                            <h5 class="text-center"><u>Tarif Dengan Driver</u></h5>
-                            <div class="col_half" style="margin-bottom: 10px;">
-                                <div class="form-group">
-                                    <label for="driver_biasa_1">Hari Biasa 1 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
-                                        </div>
-                                        <input type="text" id="driver_biasa_1" name="driver_biasa_1" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="driver_biasa_3">Hari Biasa 3 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
-                                        </div>
-                                        <input type="text" id="driver_biasa_3" name="driver_biasa_3" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="driver_biasa_24">Hari Biasa 24 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
-                                        </div>
-                                        <input type="text" id="driver_biasa_24" name="driver_biasa_24" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col_half col_last" style="margin-bottom: 10px;">
-                                <div class="form-group">
-                                    <label for="driver_khusus_1">Hari Weekend & Khusus 1 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
-                                        </div>
-                                        <input type="text" id="driver_khusus_1" name="driver_khusus_1" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="driver_khusus_3">Hari Weekend & Khusus 3 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
-                                        </div>
-                                        <input type="text" id="driver_khusus_3" name="driver_khusus_3" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="driver_khusus_24">Hari Weekend & Khusus 24 Jam</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
-                                        </div>
-                                        <input type="text" id="driver_khusus_24" name="driver_khusus_24" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                        <button class="button button-3d button-rounded button-blue">Simpan</button>
+                            <div class="clear"></div>
+                            <button class="button button-3d button-rounded button-blue" type="submit">Simpan</button>
+                        </form>
 
                         {{-- <input id="address" type="text" style="width:600px;"/><br/>
                         <input type="text" id="latitude" placeholder="Latitude"/>
@@ -307,7 +310,7 @@
         });
     </script>
 
-    <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyAWiv4KVB7UYWoI6mk5AaM8fnc-WhCProk'></script>
+    <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyA6gWwKa5elWn4KJoU4WM4t8k6eqfs_AWw'></script>
     <script type="text/javascript"> 
         var map;
         var marker;
@@ -334,7 +337,7 @@
                     if (results[0]) {
                         var loc = results[0].formatted_address;
                         var lat = marker.getPosition().lat();
-                        var long = marker.getPosition().long();
+                        var long = marker.getPosition().lng();
                         
                         // $('#latitude,#longitude').show();
                         // $('#address').val(results[0].formatted_address);
@@ -355,7 +358,7 @@
                         if (results[0]) {
                             var loc = results[0].formatted_address;
                             var lat = marker.getPosition().lat();
-                            var long = marker.getPosition().long();
+                            var long = marker.getPosition().lng();
                             
                             // $('#address').val(results[0].formatted_address);
                             // $('#latitude').val(marker.getPosition().lat());

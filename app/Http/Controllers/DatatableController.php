@@ -169,8 +169,9 @@ class DatatableController extends Controller
                 $record->nopol,
                 $record->brand->name,
                 $record->type->name,
-                '<a href="' . route('admin.voucher.edit', $record->id) . '" class="btn btn-outline-warning btn-xs" data-id="' . $record->id . '">Edit</a>'
-                .'&nbsp;<button class="btn btn-outline-danger btn-xs btn-delete" data-id="' . $record->id . '">Delete</button>'
+                '<a href="' . route('user_mobil.show', [$record->user_id, $record->id]) . '" class="button button-3d button-mini button-rounded button-aqua" data-id="' . $record->id . '">View</a>'.
+                '<a href="' . route('user_mobil.edit', [$record->user_id, $record->id]) . '" class="button button-3d button-mini button-rounded button-amber" data-id="' . $record->id . '">Edit</a>'
+                .'&nbsp;<button class="button button-3d button-mini button-rounded button-red btn-delete" data-id="' . $record->id . '">Delete</button>'
             ];
         }
         $res = [

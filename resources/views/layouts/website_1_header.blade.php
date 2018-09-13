@@ -28,9 +28,9 @@
                             <li><a href="demos/real-estate/single-property.html"><div>Premium Estates</div></a></li>
                         </ul>
                     </li> --}}
-                    <li><a href="#"><div>Cari Mobil</div></a></li>
-                    <li><a href="#"><div>Tentang Kami</div></a></li>
-                    <li><a href="#"><div>Kontak</div></a></li>
+                    <li><a href="{{ route('website.list_produk') }}"><div>Cari Mobil</div></a></li>
+                    <li><a href="{{ route('website.tentang') }}"><div>Tentang Kami</div></a></li>
+                    <li><a href="{{ route('website.kontak') }}"><div>Kontak</div></a></li>
                 </ul>
 
             </nav><!-- #primary-menu end -->

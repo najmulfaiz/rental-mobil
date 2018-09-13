@@ -44,4 +44,19 @@ class UserMobil extends Model
     {
         return $this->belongsTo('App\Type');
     }
+
+    public function provinsi()
+    {
+        return $this->belongsTo('App\Province');
+    }
+
+    public function kota()
+    {
+        return $this->belongsTo('App\Regency');
+    }
+
+    public function pemilik()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }
